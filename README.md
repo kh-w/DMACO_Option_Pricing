@@ -2,28 +2,40 @@
 Dual Moving Average Crossover Option: an exotic option with a binary payoff that is triggered when two specified simple moving averages (SMAs) of the underlying asset cross each other. The option pays a fixed amount ($1) if the crossover event occurs during the observation period, and nothing otherwise.
 
 # Inspired by
-- One-touch Option
-- Moving Average Barrier Option
-- Moving Average Look-Back Option
-- Moving Average Reset Option
-- Dual Moving Average Crossover (DMAC) Trading Strategy
+- One-touch Option: a binary exotic option that pays a fixed amount as soon as the underlying price hits a predetermined barrier before expiry.
+- Moving Average Barrier Option: an option activates (knock-in) or deactivates (knock-out) when the underlying price crosses its moving average barrier during the observation period.
+- Moving Average Look-Back Option: an option which the payoff is determined by comparing the final price (or another benchmark) to the moving average of past prices over a given window.
+- Moving Average Reset Option: an exotic option whose strike price (or reference level) is periodically reset based on the moving average of the underlying asset’s price.
+- Dual Moving Average Crossover (DMAC) Trading Strategy: a strategy that signals a buy when the short-term moving average crosses above the long-term one and a sell when it crosses below.
 
 # Motivation
-- Tackle SMA signal noise: Dual-SMA trading signals often generate false or “whipsaw” crossovers — where short- and long-term moving averages cross again soon after execution.
+- Tackle SMA signal noise: Dual-SMA trading signals often generate false or “whipsaw” crossovers, where short-term and long-term moving averages cross again soon after execution.
 - Protect against false signals: These rapid re-crossings can trigger premature trades and short-term losses.
 - DMACO as a noise hedge: Buy a Dual Moving Average Crossover Option (DMACO) alongside each trade signal.
 - Mechanism: Time horizon T days; pays a fixed amount ($1) if the short-SMA and long-SMA cross again within T days; acts as an insurance payout against a noisy reversal signal.
 - Outcome: Offsets part of the loss from false crossovers; smooths strategy performance by monetizing signal noise; transforms “bad luck” reversals into quantifiable, hedgeable events.
 
 # Stochastic Process
-Stock price (S_t) stochastic process:
+Stock price ($S_t$) stochastic process:
 - Merton Jump-Diffusion Model
-Underlying stochastic process:
-- Y_t = M^(short)_t - M^(long)_t
-Underlying "barrier" for Y_t to hit:
-- B = 0
+- (Stochastic differential equation here)
+
+The underlying stochastic process of DMACO:
+- $Y_t=M^{(short)}_t-M^{(long)}_t$
+
+For the option to payoff, we have a "barrier" for $Y_t$ to hit:
+- $B=0$
+
 Payoff stochastic process:
-- 1_{Y_t = 0}, for some t in [0,T]
+- $1_{\{Y_t=0\}}$, for some $t \in [0,T]$
+
+# Merton Jump-Diffusion Model
+
+$$dS(t) = \mu S(t) dt + \sigma S(t) dW(t) + S(t) dJ(t)$$
+
+where $J(t) = \sum_{i=1}^{N(t)} (Y_i - 1)$ with $N(t) \sim \text{Poisson}(\lambda t)$ and $\ln Y_i \sim \mathcal{N}(\mu_j, \sigma_j^2)$.
+
+Under risk-neutral measure: $dS(t)/S(t) = (r - \lambda k) dt + \sigma dW(t) + dJ(t)$ where $k = e^{\mu_j + \frac{1}{2}\sigma_j^2} - 1$.
 
 # Option pricing method - Monte Carlo Simulation
 
