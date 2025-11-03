@@ -29,14 +29,6 @@ For the option to payoff, we have a "barrier" for $Y_t$ to hit:
 Payoff stochastic process:
 - $1_{\{Y_t=0\}}$, for some $t \in [0,T]$
 
-# Merton Jump-Diffusion Model
-
-$$dS(t) = \mu S(t) dt + \sigma S(t) dW(t) + S(t) dJ(t)$$
-
-where $J(t) = \sum_{i=1}^{N(t)} (Y_i - 1)$ with $N(t) \sim \text{Poisson}(\lambda t)$ and $\ln Y_i \sim \mathcal{N}(\mu_j, \sigma_j^2)$.
-
-Under risk-neutral measure: $dS(t)/S(t) = (r - \lambda k) dt + \sigma dW(t) + dJ(t)$ where $k = e^{\mu_j + \frac{1}{2}\sigma_j^2} - 1$.
-
 # Option pricing method - Monte Carlo Simulation
 
 # Implied Volatility
