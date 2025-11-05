@@ -109,11 +109,20 @@ All plots use the x-axis for the time horizon and the y-axis for the option pric
 
 # Supply and demand
 
-The DMACO was designed primarily to provide protection for a dual-SMA trading strategy, addressing demand from hedgers. At the same time, it can be used as a trend-following investment vehicle, creating demand from traders who wish to directly capitalize on moving average crossovers. Additionally, DMACOs offer a speculative tool for volatility: investors may take a long position if they expect high volatility, or a short position if they anticipate low volatility. On the supply side, DMACOs are typically provided by market makers or traded over-the-counter between institutional players, with transactions occurring only when a buyer and seller are matched.
+The DMACO was primarily designed to provide protection for dual-SMA trading strategies, meeting demand from hedgers. At the same time, it can serve as a trend-following investment vehicle, appealing to traders who seek to capitalize directly on moving average crossovers. The option also functions as a tool for volatility speculation, allowing investors to take long positions if they expect high volatility or short positions if they anticipate low volatility. For the same reason, DMACOs can be used to vega hedge existing portfolios. On the supply side, these options are generally offered by market makers or traded over-the-counter between institutional participants, with transactions occurring only when buyers and sellers are matched.
 
 # Implied Volatility
 
-
+Traditionally, when the parameter space is low-dimensional, a dense grid (i.e., a uniform grid across all parameters) can be used to approximate the implied volatility surface. However, for DMACO, the parameter space is high-dimensional, making the computational cost of a dense grid prohibitively high. To address this, we employ the sparse grid method. In this approach, option prices are precomputed across the multidimensional parameter space using a reduced set of strategically selected grid points, i.e. allocating more points to parameters with higher sensitivity and fewer to those with lower sensitivity. Once this efficient grid is constructed, observed market prices and known parameters can be used to interpolate within the sparse grid to infer the remaining unknown parameter.
 
 # Conclusion and further research
 
+The Dual Moving Average Crossover Option (DMACO) provides a clear link between technical trading concepts and quantitative option pricing. By tying the payoff to the occurrence of a crossover between short-term and long-term moving averages, the DMACO converts signal noise in trading strategies into a measurable and tradable risk event. This allows traders to hedge against losses from false crossover signals while also offering a tool for speculation on trend dynamics and volatility.
+
+Pricing DMACO using the Merton jump-diffusion model and Monte Carlo simulation captures both continuous price fluctuations and sudden jumps, reflecting realistic market behavior. Simulation results show that the option price increases with volatility and the length of the time horizon and decreases when moving averages are longer and smoother. These results highlight the option’s sensitivity to market movements and the likelihood of crossovers.
+
+Numerical Greeks confirm that the DMACO is largely insensitive to the initial stock price, while being more sensitive to volatility. Interest rate and jump intensity have a moderate impact on price. This reflects the event-driven nature of the option, as its value depends on the timing of crossovers rather than price levels.
+
+From a market perspective, the DMACO can serve as a hedge for trend-following strategies, providing protection against short-term losses caused by noisy signals. The sensitivity analysis with respect to volatility indicates that the DMACO can be used for vega hedging in existing portfolios. It also offers opportunities for speculation, either on volatility or on the expected timing of trend changes. The option can be structured and traded over the counter, allowing market participants to tailor exposure to their specific needs.
+
+Finally, the use of sparse grid interpolation to estimate implied volatility makes the DMACO practical for high-dimensional parameter spaces and real-world applications. Overall, the DMACO represents a useful addition to the set of event-driven derivatives, providing both hedging and speculative opportunities linked directly to technical analysis signals.
